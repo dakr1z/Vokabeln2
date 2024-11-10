@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F2F2F7">
+    <title>Vokabelcoach 2.0</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-screen" id="gameScreen">
+            <div class="card">
+                <div class="header">
+                    <h1>Vokabelcoach</h1>
+                </div>
+
+                <div id="fileSelection" class="file-selection">
+                    <p class="instruction">Wähle deine Vokabeldatei aus:</p>
+                    <input type="file" 
+                           id="vocabularyFile" 
+                           accept=".rtf,.txt"
+                           class="file-input"
+                           aria-label="Vokabeldatei auswählen">
+                </div>
+
+                <div id="gameContent" style="display: none;">
+                    <p class="instruction" id="instruction">Übersetze das folgende Wort ins Englische:</p>
+                    <div class="word-container">
+                        <div id="wordDisplay" class="word" role="text" aria-live="polite"></div>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="text" 
+                               id="userInput" 
+                               placeholder="Deine Übersetzung" 
+                               autocomplete="off"
+                               aria-label="Übersetzung eingeben">
+                    </div>
+
+                    <div class="button-container">
+                        <div class="split-buttons">
+                            <button class="btn split-btn confirm" onclick="checkAnswer()" aria-label="Antwort bestätigen">
+                                Bestätigen
+                            </button>
+                            <button class="btn split-btn next" onclick="nextWord()" aria-label="Nächstes Wort">
+                                Nächstes Wort
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="stats" role="region" aria-label="Statistiken">
+                        <div class="stat-item">
+                            <span>Vokabeln gesamt:</span>
+                            <span id="totalWords">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Fortschritt:</span>
+                            <span id="progressCount">0/0 Wörter dieser Runde</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Versuche:</span>
+                            <span id="totalAttempts">0</span>
+                        </div>
+                        
+                        <div class="stat-bars">
+                            <div class="bar-container">
+                                <div class="bar-label">Richtig</div>
+                                <div class="progress-bar" role="progressbar" aria-label="Richtige Antworten">
+                                    <div id="correctBar" class="bar correct"></div>
+                                    <span id="correctCount">0</span>
+                                </div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-label">Falsch</div>
+                                <div class="progress-bar" role="progressbar" aria-label="Falsche Antworten">
+                                    <div id="wrongBar" class="bar wrong"></div>
+                                    <span id="wrongCount">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button id="switchLanguage" 
+                                class="btn control-btn" 
+                                onclick="switchLanguageMode()"
+                                aria-label="Sprache wechseln">
+                            DE-EN
+                        </button>
+                        <button id="exportStats" 
+                                class="btn control-btn" 
+                                onclick="exportVocabulary()"
+                                aria-label="Statistiken speichern">
+                            Speichern
+                        </button>
+                        <button id="resetStats" 
+                                class="btn control-btn" 
+                                onclick="resetStatistics()"
+                                aria-label="Statistiken zurücksetzen">
+                            Reset
+                        </button>
+                        <button id="loadNewVocab" 
+                                class="btn control-btn" 
+                                onclick="showFileSelection()"
+                                aria-label="Neue Vokabeln laden">
+                            Neue Vokabeln
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="correctPopup" 
+         class="popup correct-popup" 
+         role="dialog" 
+         aria-label="Richtige Antwort">
+        <div class="popup-content">
+            <h3>Richtig!</h3>
+            <p id="correctWord" class="word-display"></p>
+            <p id="pronunciation" class="pronunciation"></p>
+        </div>
+    </div>
+
+    <div id="wrongPopup" 
+         class="popup wrong-popup" 
+         role="dialog" 
+         aria-label="Falsche Antwort">
+        <div class="popup-content">
+            <h3>Falsch</h3>
+            <p id="wrongWord" class="word-display"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
